@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="myjsfile.js"></script>
+    <script src="script.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
       integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
       crossorigin=""/>
@@ -33,6 +33,21 @@
         }).addTo(mymap);
           
         var marker= L.marker([51.5, -0.09]).addTo(mymap);
+        
+        //fetching JSON data 
+        fetch('http://mappy.dali.dartmouth.edu/members.json')
+          .then((resp) => {
+                return resp.json();
+            })
+          .then((data) => {
+                data.map((student) => {
+                    console.log(student);
+                    var marker = L.marker(student.lat_long).addTo(mymap);
+                })
+        })
+        .catch(function(e){
+            console.log('Error fetching ', e);
+        })
 
           
     </script>
