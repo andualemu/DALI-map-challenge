@@ -31,8 +31,6 @@
                 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
             id: 'mapbox.streets'
         }).addTo(mymap);
-          
-        var marker= L.marker([51.5, -0.09]).addTo(mymap);
         
         //fetching JSON data 
         fetch('http://mappy.dali.dartmouth.edu/members.json')
@@ -42,7 +40,9 @@
           .then((data) => {
                 data.map((student) => {
                     console.log(student);
+                    //add markers
                     var marker = L.marker(student.lat_long).addTo(mymap);
+                    marker.bindPopup(`Name: ${student.name}<br>Message: ${student.message}<br>URL: ${student.url}<br>Project: ${student.project}<br>Terms On: ${student.terms_on}`);
                 })
         })
         .catch(function(e){
