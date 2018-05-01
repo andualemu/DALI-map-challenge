@@ -32,22 +32,41 @@
             id: 'mapbox.streets'
         }).addTo(mymap);
         
+        function checkInArray(key, arr) {
+            for (var i=0; i<arr.length; i++){
+                if(key == arr[i]){
+                    return true;
+                }
+            }
+            return false;
+        }
+          
         //fetching JSON data 
         fetch('http://mappy.dali.dartmouth.edu/members.json')
           .then((resp) => {
                 return resp.json();
             })
           .then((data) => {
-                data.map((student) => {
-                    console.log(student);
-                    //prepare custom icons to be added to markers
-                    var customIcon = L.icon({
-                        iconUrl: `http://mappy.dali.dartmouth.edu/${student.iconUrl}`,
-                    });
-                    //add markers
-                    var marker = L.marker(student.lat_long, {icon: customIcon}).addTo(mymap);
-                    marker.bindPopup(`Name: ${student.name}<br>Message: ${student.message}<br>URL: ${student.url}<br>Project: ${student.project}<br>Terms On: ${student.terms_on}`);
+                data.filter((student) => {
+                    console.log(student.terms_on);
+                    if (checkInArray("17W", student.terms_on)){
+                        return student;
+                    }
                 })
+                
+                .map((student) => {
+                console.log(student);
+                //prepare custom icons to be added to markers
+                var customIcon = L.icon({
+                    iconUrl: `http://mappy.dali.dartmouth.edu/${student.iconUrl}`,
+                    iconSize:     [40, 40],
+                    className: 'icons'
+                });
+
+                //add markers
+                var marker = L.marker(student.lat_long, {icon: customIcon}).addTo(mymap);
+                marker.bindPopup(`Name: ${student.name}<br>Message: ${student.message}<br>URL: ${student.url}<br>Project: ${student.project}<br>Terms On: ${student.terms_on}`);
+            })
         })
         .catch(function(e){
             console.log('Error fetching ', e);
