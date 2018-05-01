@@ -40,8 +40,12 @@
           .then((data) => {
                 data.map((student) => {
                     console.log(student);
+                    //prepare custom icons to be added to markers
+                    var customIcon = L.icon({
+                        iconUrl: `http://mappy.dali.dartmouth.edu/${student.iconUrl}`,
+                    });
                     //add markers
-                    var marker = L.marker(student.lat_long).addTo(mymap);
+                    var marker = L.marker(student.lat_long, {icon: customIcon}).addTo(mymap);
                     marker.bindPopup(`Name: ${student.name}<br>Message: ${student.message}<br>URL: ${student.url}<br>Project: ${student.project}<br>Terms On: ${student.terms_on}`);
                 })
         })
