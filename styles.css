@@ -1,8 +1,25 @@
-
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+}
 #main {
-  height: 500px;
+    height: 800px;
+    width: 100%;
 }
 
 .icons {
     border-radius: 50%;
+}
+
+#filter {
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    min-width: 200px;
+    max-width: 800px;
+    width: 70%;
+    height: 30px;
+    font-size: 150%;
+    padding: 5px;
 }

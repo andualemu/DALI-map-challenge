@@ -4,8 +4,8 @@
     <title>starter pack</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
       integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
       crossorigin=""/>
@@ -16,63 +16,10 @@
   </head>
   <body>
     
+    <input id="filter" type="text" onChange="handleFilter(this);" placeholder="Filter by term: 17F, 17W, 17S, 17X and hit enter" />
     <div id="main"></div>
+    
 
-      <script>
-        
-        
-
-        var mymap = L.map('main').setView([51.505, -0.09], 2);
-
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-            maxZoom: 18,
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            id: 'mapbox.streets'
-        }).addTo(mymap);
-        
-        function checkInArray(key, arr) {
-            for (var i=0; i<arr.length; i++){
-                if(key == arr[i]){
-                    return true;
-                }
-            }
-            return false;
-        }
-          
-        //fetching JSON data 
-        fetch('http://mappy.dali.dartmouth.edu/members.json')
-          .then((resp) => {
-                return resp.json();
-            })
-          .then((data) => {
-                data.filter((student) => {
-                    console.log(student.terms_on);
-                    if (checkInArray("17W", student.terms_on)){
-                        return student;
-                    }
-                })
-                
-                .map((student) => {
-                console.log(student);
-                //prepare custom icons to be added to markers
-                var customIcon = L.icon({
-                    iconUrl: `http://mappy.dali.dartmouth.edu/${student.iconUrl}`,
-                    iconSize:     [40, 40],
-                    className: 'icons'
-                });
-
-                //add markers
-                var marker = L.marker(student.lat_long, {icon: customIcon}).addTo(mymap);
-                marker.bindPopup(`Name: ${student.name}<br>Message: ${student.message}<br>URL: ${student.url}<br>Project: ${student.project}<br>Terms On: ${student.terms_on}`);
-            })
-        })
-        .catch(function(e){
-            console.log('Error fetching ', e);
-        })
-
-          
-    </script>
+    <script src="./script.js"></script>
   </body>
 </html>
