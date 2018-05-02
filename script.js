@@ -10,7 +10,7 @@ function checkInArray(key, arr) {
 }
 
 // create map
-var mymap = L.map('main').setView([0, 0], 2);
+var mymap = L.map('main').setView([0, 0], 3);
 
 // add tile layer
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -60,7 +60,7 @@ function fetchStudents(searchterm)
             //add markers
             var marker = L.marker(student.lat_long, {icon: customIcon}).addTo(mymap);
             marker.bindPopup(`Name: ${student.name}<br>Message: ${student.message}<br>URL: ${student.url}<br>Project: ${student.project}<br>Terms On: ${student.terms_on}`);
-            
+
             this.markers.push(marker);
             console.log(this.markers);
         })
